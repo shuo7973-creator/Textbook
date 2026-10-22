@@ -4,17 +4,18 @@
 
 从经济机制出发，经由企业经营、财报与估值，形成可以用数据检验的投资假设。
 
-## 当前版本：v0.1 样章版
+## 当前版本：v0.2 全书初稿
 
-- 已完成：8篇40章详细规划、先修关系、统一编写规范、6个项目与毕业项目任务书。
-- 已完成：第1章正文、12道习题、独立提示与参考答案、Python实验及Notebook。
-- 第2—40章为**规划中**；当前没有宣称整套教材已完成。
-- 第一版实验只使用明确标注的假设数据；没有真实市场回测或收益结论。
+- 8篇40章均有正文、推导与算例、练习、独立提示、参考答案和计算实验。
+- 全书324道习题：第1章12题，第2—40章每章8题；40份Notebook与对应Python实验。
+- 新增基础附录和跨章财务案例核对表，保留6个阶段项目与毕业项目任务书。
+- 这是可阅读、可计算的完整初稿；进阶主题有详略，尚未完成出版审校、PDF/网页构建和真实市场项目。全部计算案例为假设数据。
 
 ## 开始阅读
 
 | 入口 | 用途 |
 | --- | --- |
+| [全书40章导航](textbook/README.md) | 逐章进入正文、练习、答案与实验 |
 | [课程总纲](curriculum/SYLLABUS.md) | 40章的知识范围、学习结果、练习与阅读主题 |
 | [学习路线与先修关系](curriculum/ROADMAP.md) | 系统路线、专题路线、30天复习映射 |
 | [第1章：统一研究框架](textbook/part01/ch01.md) | 从降息问题建立宏观—经营—价值—检验框架 |
@@ -24,12 +25,14 @@
 | [第1章Notebook](notebooks/ch01_scenarios.ipynb) | 修改假设并复核结果 |
 | [项目任务书](projects/README.md) | 6个阶段项目和毕业项目 |
 | [参考书与来源](references/READING_MAP.md) | 四本主教材的版本、章节及阅读映射 |
+| [原始资料索引](references/SOURCES_V02.md) | 官方统计、货币口径、交易制度与方法来源 |
+| [基础附录](appendices/FOUNDATIONS.md) | 微积分、概率、矩阵、Python、会计和连续案例 |
 
 ## 如何使用
 
 建议先读正文，再独立完成核心题，最后用实验核对。每章按“理解—推导—手算—编码—解释—反例”推进。完整路线按掌握程度学习；30天路线是选读复习，不代表完成全书。
 
-正文采用本科高年级至金融硕士复习深度。必要数学在正文解释，较长证明和扩展放进阶栏；Python基础、统计和线性代数附录将在后续编写。第1章仅需要代数、百分比和折现的初步知识。
+正文面向本科高年级至金融硕士复习。必要数学在正文与基础附录解释；完整参考教材用于扩展证明和专题深读。第1章仅需要代数、百分比和折现的初步知识。章末原书阅读按主题指定，未核实的章号或页码不作精确引用。
 
 ## 运行第一个实验
 
@@ -40,6 +43,8 @@ python -m labs.ch01_scenarios
 python -m unittest discover -s tests -v
 python scripts/check_content.py
 python scripts/run_notebook.py notebooks/ch01_scenarios.ipynb
+python -m labs.ch26
+python scripts/validate_book.py
 ```
 
 最后一条命令在一个新Python进程中按顺序执行本仓库Notebook的代码单元，不等同于启动Jupyter内核。Notebook也可直接在Jupyter或支持Notebook的编辑器中打开；可选环境安装见[实验说明](notebooks/README.md)。
@@ -50,6 +55,7 @@ python scripts/run_notebook.py notebooks/ch01_scenarios.ipynb
 - 真实数据须记录来源、发布日期、当时可用版本与获取方式；示例数据见[数据字典](data/README.md)。
 - 教材制作进度与学习者掌握进度分开。发布章节不会自动标记任何人的学习完成状态。
 - 每篇完成后再整体验收。PDF和网页版为后续交付；当前以可直接阅读的Markdown与Notebook为主。
+- 第2—40章的可维护源稿位于`authoring/`；修改源稿后运行`python scripts/build_book.py`生成正文、题答和Notebook，再用`--check`检查一致性。
 - [编写规范与验收标准](docs/EDITORIAL_GUIDE.md)、[版本路线](docs/RELEASE_PLAN.md)、[来源与权利说明](NOTICE.md)。
 
 ## 设计参考

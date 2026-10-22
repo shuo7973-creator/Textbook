@@ -24,28 +24,34 @@ def main():
             destination = target.split("#", 1)[0]
             if destination and not (path.parent / destination).exists():
                 errors.append(f"Broken local link: {path.relative_to(ROOT)} -> {target}")
-    def ids(path):
-        return re.findall(r"^## (CH01-E\d{2})\b", path.read_text(encoding="utf-8"), re.M)
-    exercises = ids(ROOT / "workbook/ch01.md")
-    answers = ids(ROOT / "solutions/ch01.md")
-    expected = [f"CH01-E{x:02d}" for x in range(1, 13)]
-    if exercises != expected or answers != expected:
-        errors.append("Exercises and solutions must each contain E01 through E12 exactly once")
+    for n in range(1, 41):
+        expected = [f"CH{n:02d}-E{x:02d}" for x in range(1, 13 if n == 1 else 9)]
+        for relative in [f"workbook/ch{n:02d}.md", f"solutions/ch{n:02d}.md", f"solutions/ch{n:02d}-hints.md"]:
+            path = ROOT / relative
+            ids = re.findall(r"^## (CH\d{2}-E\d{2})\b", path.read_text(encoding="utf-8"), re.M)
+            if n == 1 and relative.endswith("-hints.md"):
+                ids = re.findall(r"^\| (CH01-E\d{2}) \|", path.read_text(encoding="utf-8"), re.M)
+            if ids != expected:
+                errors.append(f"Exercise IDs differ: {relative}")
+        path = ROOT / f"textbook/part{(n-1)//5+1:02d}/ch{n:02d}.md"
+        if not path.exists(): errors.append(f"Missing chapter {n}")
     syllabus = (ROOT / "curriculum/SYLLABUS.md").read_text(encoding="utf-8")
     numbers = [int(x) for x in re.findall(r"^### 第(\d+)章", syllabus, re.M)]
     if numbers != list(range(1, 41)):
         errors.append("Syllabus must contain each chapter 1 through 40 once, in order")
-    notebook = json.loads((ROOT / "notebooks/ch01_scenarios.ipynb").read_text(encoding="utf-8"))
-    if notebook.get("nbformat") != 4:
-        errors.append("Expected notebook v4")
-    for cell in notebook["cells"]:
-        if cell["cell_type"] == "code":
-            source = cell["source"]
-            compile("".join(source) if isinstance(source, list) else source, "notebook", "exec")
+    notebooks = sorted((ROOT / "notebooks").glob("*.ipynb"))
+    if len(notebooks) != 40: errors.append("Expected 40 notebooks")
+    for path in notebooks:
+        notebook = json.loads(path.read_text(encoding="utf-8"))
+        if notebook.get("nbformat") != 4: errors.append(f"Expected notebook v4: {path.name}")
+        for cell in notebook["cells"]:
+            if cell["cell_type"] == "code":
+                source = cell["source"]
+                compile("".join(source) if isinstance(source, list) else source, str(path), "exec")
     if errors:
         print("\n".join(errors))
         sys.exit(1)
-    print("PASS: local links, 40 planned chapters, 12 exercise/solution pairs, notebook code syntax")
+    print("PASS: local links, 40 chapter sets, 324 exercise/hint/solution triples, 40 notebook code syntax")
 
 
 if __name__ == "__main__":

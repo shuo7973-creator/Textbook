@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "kind": "constructed_teaching_data",
+    "company": "澄远制造（虚构的有限寿命企业）",
+    "currency": "CNY",
+    "money_unit": "亿元",
+    "share_unit": "亿股",
+    "valuation_time": "Y0年末",
+    "cashflow_timing": "Y1、Y2、Y3各年末",
+    "source": "本项目原创假设数据；无真实市场观测"
+  },
+  "common": {
+    "initial_operating_nwc": 18.0,
+    "tax_rate": 0.25,
+    "terminal_recovery": 40.0,
+    "debt_at_valuation": 20.0,
+    "excess_cash_at_valuation": 5.0,
+    "shares": 10.0
+  },
+  "scenarios": {
+    "base": {
+      "label": "基准",
+      "discount_rate": 0.10,
+      "years": [
+        {"year": 1, "revenue": 100.0, "ebit_margin": 0.15, "depreciation": 4.0, "capex": 6.0, "operating_nwc": 20.0},
+        {"year": 2, "revenue": 110.0, "ebit_margin": 0.15, "depreciation": 4.0, "capex": 6.0, "operating_nwc": 22.0},
+        {"year": 3, "revenue": 121.0, "ebit_margin": 0.15, "depreciation": 4.0, "capex": 6.0, "operating_nwc": 24.2}
+      ]
+    },
+    "recovery": {
+      "label": "宽松伴随需求改善",
+      "discount_rate": 0.09,
+      "years": [
+        {"year": 1, "revenue": 104.0, "ebit_margin": 0.16, "depreciation": 4.0, "capex": 6.0, "operating_nwc": 20.8},
+        {"year": 2, "revenue": 116.0, "ebit_margin": 0.16, "depreciation": 4.0, "capex": 6.0, "operating_nwc": 23.2},
+        {"year": 3, "revenue": 130.0, "ebit_margin": 0.16, "depreciation": 4.0, "capex": 6.0, "operating_nwc": 26.0}
+      ]
+    },
+    "weakness": {
+      "label": "宽松伴随需求疲弱",
+      "discount_rate": 0.09,
+      "years": [
+        {"year": 1, "revenue": 90.0, "ebit_margin": 0.12, "depreciation": 4.0, "capex": 6.0, "operating_nwc": 18.0},
+        {"year": 2, "revenue": 90.0, "ebit_margin": 0.12, "depreciation": 4.0, "capex": 6.0, "operating_nwc": 18.0},
+        {"year": 3, "revenue": 90.0, "ebit_margin": 0.12, "depreciation": 4.0, "capex": 6.0, "operating_nwc": 18.0}
+      ]
+    }
+  }
+}

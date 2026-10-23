@@ -43,6 +43,8 @@ B的美国版第25章为货币政策传导机制；13版全球版该主题为第
 
 ## 实务与量化延伸
 
+第6—10章新增的逐章范围、官方方法资料与独立计算见[第二批一致性核验表](ALIGNMENT_V03_PART02.md)。本批A章号对应英文11版：第6章读A2—3，第7章读A8—10，第8章读A11—13及A15，第9章读A20，第10章读A6及A14；C的第4—6章补充现值与资本预算。不把公开目录定位写成已取得教材正文。
+
 - F：Koller、Goedhart、Wessels等，*Valuation: Measuring and Managing the Value of Companies*，作为价值创造、预测与估值的按主题延伸；具体版次待相应章编写时核查。
 - G：Aswath Damodaran，*Investment Valuation*，作为估值方法与行业边界的延伸；免费资源可从[作者教学入口](https://pages.stern.nyu.edu/~adamodar/)查找，后续按实际使用材料逐项核查。
 - Q：[QuantWeft课程大纲](https://github.com/YuxiaoMa66/quantweft/blob/main/editions/zh/resources/syllabus.md)及[多因子项目说明](https://github.com/YuxiaoMa66/quantweft/blob/main/projects/project04/README.md)。参考其教学组织、时点口径与验证意识。项目自身区分构造实验与真实市场研究，本书也保持这种区别。

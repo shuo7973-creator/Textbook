@@ -90,7 +90,7 @@ def main():
     outputs = {}
     for chapter in items:
         outputs.update(artifacts(chapter))
-    navigation = "# 全书阅读导航\n\n第1—40章均已有正文、练习和答案。第1—5章已完成v0.3第一批深化，第6—40章保持v0.2初稿，后续逐批推进。教学实验使用假设数据，真实市场项目按各自状态说明。\n\n| 章 | 正文 | 练习 | 答案 | 实验 |\n| --- | --- | --- | --- | --- |\n"
+    navigation = "# 全书阅读导航\n\n第1—40章均已有正文、练习和答案。第1—5章已完成v0.3第一批深化，第6—10章已完成第二批深化；第11—40章保持v0.2初稿，后续逐批推进。教学实验使用假设数据，参考全文对照范围见各批核验表。\n\n| 章 | 正文 | 练习 | 答案 | 实验 |\n| --- | --- | --- | --- | --- |\n"
     navigation += "| 1 | [统一研究框架](part01/ch01.md) | [练习](../workbook/ch01.md) | [答案](../solutions/ch01.md) | [Notebook](../notebooks/ch01_scenarios.ipynb) |\n"
     for c in items:
         n = c.number

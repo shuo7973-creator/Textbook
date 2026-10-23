@@ -24,11 +24,11 @@ def main():
     for path in paths:
         notebook = json.loads(path.read_text(encoding="utf-8"))
         if path.name != "ch01_scenarios.ipynb":
-            source = "".join(notebook["cells"][1]["source"])
+            source = "".join("".join(c["source"]) for c in notebook["cells"] if c["cell_type"] == "code")
             assert source == (ROOT / "labs" / (path.stem + ".py")).read_text(encoding="utf-8")
         run(["scripts/run_notebook.py", str(path)])
         print(f"PASS {path.name}")
-    print("PASS 11 unit checks; 40 notebooks executed as ordinary Python in fresh processes.")
+    print("PASS unit checks; 40 notebooks executed as ordinary Python in fresh processes.")
 
 
 if __name__ == "__main__":

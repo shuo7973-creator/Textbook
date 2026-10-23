@@ -94,6 +94,20 @@ def evaluate(case, scenario_name, discount_rate=None):
             "value_per_share": equity / shares}
 
 
+def symmetric_attribution(case, old_scenario="base", new_scenario="weakness",
+                          old_rate=.10, new_rate=.09):
+    """四角点对称归因；仅为给定模型中的分解，不识别政策因果。"""
+    v00 = evaluate(case, old_scenario, old_rate)["operating_value"]
+    v01 = evaluate(case, old_scenario, new_rate)["operating_value"]
+    v10 = evaluate(case, new_scenario, old_rate)["operating_value"]
+    v11 = evaluate(case, new_scenario, new_rate)["operating_value"]
+    return {"corners": (v00, v01, v10, v11),
+            "interaction": v11-v10-v01+v00,
+            "rate": ((v01-v00)+(v11-v10))/2,
+            "operations": ((v10-v00)+(v11-v01))/2,
+            "total": v11-v00}
+
+
 def main():
     case = load_case()
     print("假设数据；Y0估值；现金流于Y1—Y3年末；金额亿元，每股元。")
@@ -111,6 +125,7 @@ def main():
           f"经营={weak-rate_only:.6f}, 总变化={weak-base:.6f}")
     for rate in (0.08, 0.09, 0.10, 0.11, 0.12):
         print(f"基准经营、k={rate:.0%}: V={evaluate(case, 'base', rate)['operating_value']:.6f}")
+    print("四角点与对称归因：", symmetric_attribution(case))
 
 
 if __name__ == "__main__":

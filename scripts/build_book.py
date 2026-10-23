@@ -2,6 +2,7 @@
 
 import importlib
 import json
+import re
 from pathlib import Path
 import sys
 
@@ -24,11 +25,13 @@ def artifacts(chapter):
     ident = f"ch{n:02d}"
     part = (n - 1) // 5 + 1
     preface = (f"# 第{n}章 {chapter.title}\n\n"
-               f"状态：全书初稿v0.2。先修：{chapter.prerequisites}。\n\n"
+               f"状态：{chapter.edition}。先修：{chapter.prerequisites}。\n\n"
                f"[练习册](../../workbook/{ident}.md)｜[提示](../../solutions/{ident}-hints.md)｜"
                f"[答案](../../solutions/{ident}.md)｜[Notebook](../../notebooks/{ident}.ipynb)\n\n"
                "本章数值、企业和策略样本均为假设教学数据，真实制度另给原始来源。核心阅读与手算建议分2—3次完成，进阶题另计。\n\n"
                "## 学习目标\n\n" + "\n".join(f"- {g}" for g in chapter.goals) + "\n\n")
+    if chapter.study_note:
+        preface += "## 学习安排与问题\n\n" + chapter.study_note + "\n\n"
     ending = (f"\n\n## 计算实验与复述\n\n"
               f"从仓库根目录运行 `python -m labs.{ident}` 或打开本章Notebook。"
               "先手算正文基准，再运行代码，改变一个输入并解释方向与边界。"
@@ -38,10 +41,16 @@ def artifacts(chapter):
               f"## 参考阅读\n\n{chapter.reading}\n\n"
               "版次、原始资料与版本核查见[来源索引](../../references/SOURCES_V02.md)。"
               "外文教材按主题选读，未核实的页码和章号不作指定。\n")
+    if chapter.exit_task:
+        ending += "\n## 本章验收与下一步\n\n" + chapter.exit_task + "\n"
     workbook = f"# 第{n}章练习册：{chapter.title}\n\n[正文](../textbook/part{part:02d}/{ident}.md)｜[提示](../solutions/{ident}-hints.md)｜[答案](../solutions/{ident}.md)\n\n"
     workbook += "共8题、100分。E01—E06为核心题，每题建议10—15分钟；E07—E08为进阶题，每题20—30分钟。每题12.5分。所有数值为假设数据，除另注外金额为人民币亿元、期间为一年，支付在期末。完整说明计算过程与适用条件。\n\n"
     hints = f"# 第{n}章分层提示\n\n先独立完成[练习](../workbook/{ident}.md)。\n\n"
     answers = f"# 第{n}章参考答案\n\n对应[练习册](../workbook/{ident}.md)。每题12.5分：核心推理或计算5分，步骤与口径5分，解释或边界2.5分；纯概念题按答案中的关键点分配。开放题允许不同结论，须给出可核查论据。\n\n"
+    if len(chapter.exercises) == 12:
+        workbook = f"# 第{n}章练习册：{chapter.title}\n\n[正文](../textbook/part{part:02d}/{ident}.md)｜[提示](../solutions/{ident}-hints.md)｜[答案](../solutions/{ident}.md)\n\n"
+        workbook += "v0.3第一批：12题、100分。E01—E08为核心题，每题8分、建议10—20分钟；E09—E12为进阶题，每题9分、建议20—35分钟。全部数值为假设数据，金额单位、报告期与时点以题目说明为准。需提交计算步骤、口径与结论边界。\n\n"
+        answers = f"# 第{n}章参考答案\n\n对应[练习册](../workbook/{ident}.md)。E01—E08各8分：推理或计算4分、步骤与口径2分、解释或边界2分；E09—E12各9分：推理或计算4分、步骤与口径3分、解释或边界2分。各题列出解题步骤与易错点；开放题接受满足同等证据要求的不同答案。\n\n"
     for i, (question, hint, answer) in enumerate(chapter.exercises, 1):
         label = f"CH{n:02d}-E{i:02d}"
         workbook += f"## {label}\n\n{question}\n\n"
@@ -57,6 +66,15 @@ def artifacts(chapter):
         "metadata": {"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"}, "language_info": {"name": "python"}},
         "nbformat": 4, "nbformat_minor": 5
     }
+    if "\n# %% " in code:
+        boundaries = [0] + [m.start()+1 for m in re.finditer(r"\n# %% ", code)] + [len(code)]
+        cells = [notebook["cells"][0]]
+        for j, (start, stop) in enumerate(zip(boundaries, boundaries[1:])):
+            block = code[start:stop]
+            title = block.splitlines()[0][5:] if block.startswith("# %% ") else "准备与数据合同"
+            cells.append({"cell_type":"markdown", "id":f"step-{j}", "metadata":{}, "source":[f"## {title}\n", "运行前先写出预期结果；运行后解释差异。"]})
+            cells.append({"cell_type":"code", "id":f"code-{j}", "metadata":{}, "execution_count":None, "outputs":[], "source":block.splitlines(keepends=True)})
+        notebook["cells"] = cells + [notebook["cells"][-1]]
     return {
         f"textbook/part{part:02d}/{ident}.md": preface + chapter.body.strip() + ending,
         f"workbook/{ident}.md": workbook,
@@ -72,7 +90,7 @@ def main():
     outputs = {}
     for chapter in items:
         outputs.update(artifacts(chapter))
-    navigation = "# 全书阅读导航\n\n第1—40章均已有正文、练习和答案。v0.2为完整初稿，教学实验使用假设数据，真实市场项目按各自状态说明。\n\n| 章 | 正文 | 练习 | 答案 | 实验 |\n| --- | --- | --- | --- | --- |\n"
+    navigation = "# 全书阅读导航\n\n第1—40章均已有正文、练习和答案。第1—5章已完成v0.3第一批深化，第6—40章保持v0.2初稿，后续逐批推进。教学实验使用假设数据，真实市场项目按各自状态说明。\n\n| 章 | 正文 | 练习 | 答案 | 实验 |\n| --- | --- | --- | --- | --- |\n"
     navigation += "| 1 | [统一研究框架](part01/ch01.md) | [练习](../workbook/ch01.md) | [答案](../solutions/ch01.md) | [Notebook](../notebooks/ch01_scenarios.ipynb) |\n"
     for c in items:
         n = c.number

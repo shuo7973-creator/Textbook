@@ -1,17 +1,19 @@
 # 主教材、版次与阅读映射
 
-核查日期：2026-10-22。这里核对的是出版方书目与公开目录，不表示取得或逐页审读整本教材。中文译本按章名对应，不直接套用英文版章号；不编造页码。参考书不随仓库分发。
+核查日期：2026-10-23。这里核对的是出版方书目与公开目录，不表示取得或逐页审读整本教材。中文译本按章名对应，不直接套用英文版章号；不编造页码。参考书不随仓库分发。第1—5章的具体版本标识、方法来源及核查边界见[一致性核验表](ALIGNMENT_V03_PART01.md)。
 
 ## 四本主教材
 
 | 代号 | 参考版本 | 作用 | 官方入口 |
 | --- | --- | --- | --- |
 | A | N. Gregory Mankiw, *Macroeconomics*, 英文11版 | 宏观理论、增长、波动与开放经济 | [Macmillan目录](https://store.macmillanlearning.com/us/product/Macroeconomics/p/1319387993) |
-| B | Frederic S. Mishkin, *The Economics of Money, Banking, and Financial Markets*, 英文13版 | 利率、银行、货币与政策传导 | [Pearson目录](https://www.pearson.com/en-us/subject-catalog/p/economics-of-money-banking-and-financial-markets-the/P200000005989/9780136893929) |
+| B | Frederic S. Mishkin, *The Economics of Money, Banking, and Financial Markets*, 英文13版美国版，电子书ISBN 9780136893929 | 利率、银行、货币与政策传导 | [Pearson目录](https://www.pearson.com/en-us/subject-catalog/p/economics-of-money-banking-and-financial-markets-the/P200000005989/9780136893929) |
 | C | Ross等, *Corporate Finance*, 英文完整版2025 Release | 现金流、资本预算、风险、融资与分配 | [McGraw Hill目录](https://www.mheducation.com/highered/product/Corporate-Finance-Ross.html) |
 | D | Stephen H. Penman, *Financial Statement Analysis and Security Valuation*, 英文5版 | 财报重构、盈利与增长、预测及价值锚定 | [出版方5版目录](https://glencoe.mheducation.com/sites/0078025311/information_center_view0/table_of_contents.html) |
 
 这是学习用参考版，不声称为各书最新版。C使用出版方release标识，不与精要版或其他分册混同。
+
+B的美国版第25章为货币政策传导机制；13版全球版该主题为第26章，见[官方全球版目录](https://www.pearson.com/en-au/media/fwvdzehg/9781292409481-toc.pdf)。本仓库B章号默认美国版；其他地区版按主题映射。
 
 ## 全书主题映射
 

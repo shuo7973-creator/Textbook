@@ -25,7 +25,7 @@ def main():
             if destination and not (path.parent / destination).exists():
                 errors.append(f"Broken local link: {path.relative_to(ROOT)} -> {target}")
     for n in range(1, 41):
-        expected = [f"CH{n:02d}-E{x:02d}" for x in range(1, 13 if n <= 20 else 9)]
+        expected = [f"CH{n:02d}-E{x:02d}" for x in range(1, 13 if n <= 25 else 9)]
         for relative in [f"workbook/ch{n:02d}.md", f"solutions/ch{n:02d}.md", f"solutions/ch{n:02d}-hints.md"]:
             path = ROOT / relative
             ids = re.findall(r"^## (CH\d{2}-E\d{2})\b", path.read_text(encoding="utf-8"), re.M)
@@ -51,7 +51,7 @@ def main():
     if errors:
         print("\n".join(errors))
         sys.exit(1)
-    print("PASS: local links, 40 chapter sets, 400 exercise/hint/solution triples, 40 notebook code syntax")
+    print("PASS: local links, 40 chapter sets, 420 exercise/hint/solution triples, 40 notebook code syntax")
 
 
 if __name__ == "__main__":

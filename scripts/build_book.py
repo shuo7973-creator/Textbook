@@ -49,7 +49,7 @@ def artifacts(chapter):
     answers = f"# 第{n}章参考答案\n\n对应[练习册](../workbook/{ident}.md)。每题12.5分：核心推理或计算5分，步骤与口径5分，解释或边界2.5分；纯概念题按答案中的关键点分配。开放题允许不同结论，须给出可核查论据。\n\n"
     if len(chapter.exercises) == 12:
         workbook = f"# 第{n}章练习册：{chapter.title}\n\n[正文](../textbook/part{part:02d}/{ident}.md)｜[提示](../solutions/{ident}-hints.md)｜[答案](../solutions/{ident}.md)\n\n"
-        workbook += "v0.3第一批：12题、100分。E01—E08为核心题，每题8分、建议10—20分钟；E09—E12为进阶题，每题9分、建议20—35分钟。全部数值为假设数据，金额单位、报告期与时点以题目说明为准。需提交计算步骤、口径与结论边界。\n\n"
+        workbook += "v0.3分层练习：12题、100分。E01—E08为核心题，每题8分、建议10—20分钟；E09—E12为进阶题，每题9分、建议20—35分钟。全部数值为假设数据，金额单位、报告期与时点以题目说明为准。需提交计算步骤、口径与结论边界。\n\n"
         answers = f"# 第{n}章参考答案\n\n对应[练习册](../workbook/{ident}.md)。E01—E08各8分：推理或计算4分、步骤与口径2分、解释或边界2分；E09—E12各9分：推理或计算4分、步骤与口径3分、解释或边界2分。各题列出解题步骤与易错点；开放题接受满足同等证据要求的不同答案。\n\n"
     for i, (question, hint, answer) in enumerate(chapter.exercises, 1):
         label = f"CH{n:02d}-E{i:02d}"
@@ -90,7 +90,7 @@ def main():
     outputs = {}
     for chapter in items:
         outputs.update(artifacts(chapter))
-    navigation = "# 全书阅读导航\n\n第1—40章均已有正文、练习和答案。第1—5章已完成v0.3第一批深化，第6—10章已完成第二批深化，第11—15章已完成第三批深化，第16—20章已完成第四批深化；第21—40章保持v0.2初稿，后续逐批推进。教学实验使用假设数据，参考全文对照范围见各批核验表。\n\n| 章 | 正文 | 练习 | 答案 | 实验 |\n| --- | --- | --- | --- | --- |\n"
+    navigation = "# 全书阅读导航\n\n第1—40章均已有正文、练习和答案。第1—25章已按五个批次完成v0.3深化；第26—40章保持v0.2初稿，后续逐批推进。教学实验使用假设数据，参考全文对照范围见各批核验表。第五批同步修正连续案例支付利息分类及其FCFF桥接。\n\n| 章 | 正文 | 练习 | 答案 | 实验 |\n| --- | --- | --- | --- | --- |\n"
     navigation += "| 1 | [统一研究框架](part01/ch01.md) | [练习](../workbook/ch01.md) | [答案](../solutions/ch01.md) | [Notebook](../notebooks/ch01_scenarios.ipynb) |\n"
     for c in items:
         n = c.number
